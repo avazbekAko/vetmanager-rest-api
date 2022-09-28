@@ -42,7 +42,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Pet type_id:</strong>
-                        <input type="text" name="type_id" class="form-control" placeholder="Pet type_id">
+                        <input type="text" name="type_id" class="form-control" placeholder="Pet type_id" required>
                         @error('type_id')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
@@ -51,7 +51,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Pet breed_id:</strong>
-                        <input type="text" name="breed_id" class="form-control" placeholder="Pet breed_id">
+                        <input type="text" name="breed_id" class="form-control" placeholder="Pet breed_id" required>
                         @error('breed_id')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror

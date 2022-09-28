@@ -37,6 +37,7 @@ Route::group([
     });
     Route::resource('/companies', CompanyController::class);
     Route::get('/connection/{id}/clients-all', [ConnController::class, 'all'])->name('clients-all');
+    Route::get('/connection/{id}/clients-search', [ConnController::class, 'search']);
     Route::get('/connection/{id}/client-create', [ConnController::class, 'create']);
     Route::post('/connection/{id}/client-create', [ConnController::class, 'store']);
     Route::get('/connection/{id}/client/{id_client}/delete', [ConnController::class, 'destroy']);

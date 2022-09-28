@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
 use Exception;
 use GuzzleHttp\Client;
+use App\Models\Company;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request as HttpRequest;
 
 class ConnController extends Controller
 {
-    public function __construct()
-    {
-    }
+
     public function all($id)
     {
         try{
@@ -21,13 +20,78 @@ class ConnController extends Controller
             $url = $com->url;
             $client = new Client();
             $headers = ['X-REST-API-KEY' => $key];
-            $request = new Request('GET', $url.'/rest/api/client', $headers);
+            $request = new Request('GET', $url.'/rest/api/client/clientsSearchData?limit=50', $headers);
             $res = $client->sendAsync($request)->wait();
             $res = json_decode($res->getBody());
             $res = $res->data->client;
             $result = [];
             foreach($res as $re){
                 if($re->status == 'ACTIVE'){
+                    $re->id = $re->client_id;
+                    try{
+                        $re->pet = '';
+                        foreach ($re->pets as $pets)
+                            $re->pet .= $pets->alias.", ";
+                    }
+                    catch(Exception $e){
+                        $re->pet = " ";
+                    }
+                    try{
+                        $re->city = $re->city_data->title;
+                    }
+                    catch(Exception $e){
+                        $re->city = " ";
+                    }
+                    try{
+                        $re->address = "ул. ".$re->street_data->title." ".$re->apartment;
+                    }
+                    catch(Exception $e){
+                        try{
+                            $re->address = "ул".$re->street_data->title;
+                        }
+                        catch(Exception $e){
+                            try{
+                                $re->address = $re->apartment;
+                            }
+                            catch(Exception $e){
+                                $re->address = " ";
+                            }
+                        }
+                    }
+                    $result[] = $re;
+                }
+            }
+            return view('conn.index', compact('result'), compact('id'));
+        }
+        catch(Exception $e){
+            $er =  'Error: '.$e->getMessage();
+            return redirect()->route('companies.edit', $id)->with('error', $er);
+        }
+    }
+    public function search(HttpRequest $request, $id)
+    {
+        try{
+            $com = Company::find($id);
+            $key = $com->key;
+            $url = $com->url;
+            $client = new Client();
+            $headers = ['X-REST-API-KEY' => $key];
+            $request = new Request('GET', $url.'/rest/api/client/clientsSearchData?limit=50&search_query='.$request->search, $headers);
+            $res = $client->sendAsync($request)->wait();
+            $res = json_decode($res->getBody());
+            $res = $res->data->client;
+            $result = [];
+            foreach($res as $re){
+                if($re->status == 'ACTIVE'){
+                    $re->id = $re->client_id;
+                    try{
+                        $re->pet = '';
+                        foreach ($re->pets as $pets)
+                            $re->pet .= $pets->alias.", ";
+                    }
+                    catch(Exception $e){
+                        $re->pet = " ";
+                    }
                     try{
                         $re->city = $re->city_data->title;
                     }
@@ -66,6 +130,19 @@ class ConnController extends Controller
     }
     public function store(HttpRequest $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'city_id' => 'nullable|integer',
+            'street_id' => 'nullable|integer',
+            'type_id' => 'nullable|integer',
+            'how_find' => 'nullable|integer',
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $com = Company::find($id);
         $key = $com->key;
         $url = $com->url;
@@ -129,6 +206,18 @@ class ConnController extends Controller
     }
     public function update(HttpRequest $request, $id, $id_client)
     {
+        $validator = Validator::make($request->all(), [
+            'city_id' => 'nullable|integer',
+            'street_id' => 'nullable|integer',
+            'type_id' => 'nullable|integer',
+            'how_find' => 'nullable|integer',
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
         $com = Company::find($id);
         $key = $com->key;
         $url = $com->url;

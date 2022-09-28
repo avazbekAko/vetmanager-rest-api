@@ -3,9 +3,21 @@
 @section('content')
     <div class="container mt-2">
         <div class="row">
-            <div class="col-lg-12 margin-tb">
+            <div class="col-lg-3">
                 <div class="pull-right">
                     <a class="btn btn-success" href="{{ url('/connection/'.$id.'/client-create') }}"> Create Client</a>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="pull-right">
+                    <form action="/connection/{{$id}}/clients-search" method="GET">
+                        <input type="text" name="search" class="form-control" placeholder="search" value="@if (isset($_GET['search'])){{ $_GET['search'] }}@endif">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary ml-3">search</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -24,10 +36,10 @@
                 <tr>
                     <th>N</th>
                     <th>ФИО</th>
+                    <th>Питомцы</th>
                     <th>Город</th>
                     <th>Адрес</th>
                     <th>Баланс</th>
-                    <th>Последний счет</th>
                     <th width="280px">Action</th>
                 </tr>
             </thead>
@@ -36,10 +48,10 @@
                     <tr>
                         <td>{{ $re->id }}</td>
                         <td>{{ $re->last_name." ".$re->first_name }}</td>
+                        <td>{{ $re->pet }}</td>
                         <td>{{ $re->city }}</td>
                         <td>{{ $re->address }}</td>
                         <td>{{ floor($re->balance*100)/100 }} руб.</td>
-                        <td>{{ $re->last_visit_date }}</td>
                         <td>
                             <a class="btn btn-primary" href="{{ url('/connection/'.$id.'/client/'.$re->id.'/edit') }}">Edit</a>
                             <a href="{{ url('/connection/'.$id.'/client/'.$re->id.'/delete') }}" class="btn btn-danger">Delete</a>

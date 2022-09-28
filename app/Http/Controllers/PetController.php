@@ -7,12 +7,10 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\Validator;
 
 class PetController extends Controller
 {
-    public function __construct()
-    {
-    }
     public function all($id, $id_client)
     {
         try{
@@ -64,6 +62,19 @@ class PetController extends Controller
     }
     public function store(HttpRequest $request, $id, $id_client)
     {
+        $validator = Validator::make($request->all(), [
+            'type_id' => 'required|integer',
+            'breed_id' => 'required|integer',
+            'color_id' => 'nullable|integer',
+            'birthday' => 'nullable|date',
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $com = Company::find($id);
         $key = $com->key;
         $url = $com->url;
@@ -126,6 +137,18 @@ class PetController extends Controller
     }
     public function update(HttpRequest $request, $id, $id_client, $id_pet)
     {
+        $validator = Validator::make($request->all(), [
+            'type_id' => 'required|integer',
+            'breed_id' => 'required|integer',
+            'color_id' => 'nullable|integer',
+            'birthday' => 'nullable|date',
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
         $com = Company::find($id);
         $key = $com->key;
         $url = $com->url;
