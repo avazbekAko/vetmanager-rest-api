@@ -7,6 +7,16 @@ use Illuminate\Http\Request;
 class CompanyController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
     * Display a listing of the resource.
     *
     * @return \Illuminate\Http\Response
@@ -40,9 +50,15 @@ class CompanyController extends Controller
             'key' => 'required',
         ]);
 
-        $request->user_id = auth()->id();
+        $user_id = auth()->id();
 
-        Company::create($request->post());
+        Company::create([
+            "url" => $request->url,
+            "key" => $request->key,
+            "user_id" => $user_id
+            ]
+        );
+
 
         return redirect()->route('companies.index')->with('success','Company has been created successfully.');
     }
@@ -81,10 +97,17 @@ class CompanyController extends Controller
         $request->validate([
             'url' => 'required',
             'key' => 'required',
-            'user_id' => 'required',
         ]);
 
-        $company->fill($request->post())->save();
+        $user_id = auth()->id();
+
+        $company->fill(
+            [
+                'url' => $request->url,
+                'key' => $request->key,
+                'user_id' => $user_id
+            ]
+        )->save();
 
         return redirect()->route('companies.index')->with('success','Company Has Been updated successfully');
     }

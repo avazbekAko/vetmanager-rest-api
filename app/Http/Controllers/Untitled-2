@@ -1,0 +1,9 @@
+curl --location --request POST 'http://{DOMAIN NAME}/rest/api/pet' \
+--header 'Content-Type: application/json' \
+--header 'X-REST-API-KEY: {REST API KEY}' \
+--data-raw '{
+     "owner_id":6,
+     "alias":"Матроскин",
+     "type_id": 13,
+     "breed_id":444
+}'
