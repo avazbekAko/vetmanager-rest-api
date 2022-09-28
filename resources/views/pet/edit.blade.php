@@ -8,7 +8,7 @@
                     <h2>Edit Company</h2>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('clients-all', $id) }}" enctype="multipart/form-data">
+                    <a class="btn btn-primary" href="{{ route('clients-all', $ids['id']) }}" enctype="multipart/form-data">
                         Back</a>
                 </div>
             </div>
@@ -18,168 +18,78 @@
             {{ session('status') }}
         </div>
         @endif
-        <form action="{{ url('/connection/'.$id.'/client/'.$res->id.'/edit') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url('/connection/'.$ids['id'].'/client/'.$ids['id_client'].'/pet/'.$res->id.'/edit') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Client Last name:</strong>
-                        <input type="text" name="last_name" class="form-control" value="{{ $res->last_name }}">
-                        @error('last_name')
+                        <strong>Pet alias:</strong>
+                        <input type="text" name="alias" class="form-control" value="{{ $res->alias }}">
+                        @error('alias')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Client first name:</strong>
-                        <input type="text" name="first_name" class="form-control" value="{{ $res->first_name }}">
-                        @error('first_name')
+                        <strong>Pet пол:</strong>
+                        <input type="text" name="sex" class="form-control" value="{{ $res->sex }}">
+                        @error('sex')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Client middle name:</strong>
-                        <input type="text" name="middle_name" class="form-control" value="{{ $res->middle_name }}">
-                        @error('middle_name')
+                        <strong>Pet breed_id:</strong>
+                        <input type="text" name="breed_id" class="form-control" value="{{ $res->breed_id }}">
+                        @error('breed_id')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Client passport series:</strong>
-                        <input type="text" name="passport_series" class="form-control" value="{{ $res->passport_series }}">
-                        @error('passport_series')
+                        <strong>Pet color_id:</strong>
+                        <input type="text" name="color_id" class="form-control" value="{{ $res->color_id }}">
+                        @error('color_id')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Client home phone:</strong>
-                        <input type="text" name="home_phone" class="form-control" value="{{ $res->home_phone }}">
-                        @error('home_phone')
+                        <strong>Pet weight:</strong>
+                        <input type="text" name="weight" class="form-control" value="{{ $res->weight }}">
+                        @error('weight')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Client work phone:</strong>
-                        <input type="text" name="work_phone" class="form-control" value="{{ $res->work_phone }}">
-                        @error('work_phone')
+                        <strong>Pet birthday:</strong>
+                        <input type="text" name="birthday" class="form-control" value="{{ $res->birthday }}">
+                        @error('birthday')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Client cell phone:</strong>
-                        <input type="text" name="cell_phone" class="form-control" value="{{ $res->cell_phone }}">
-                        @error('cell_phone')
+                        <strong>Pet chip_number:</strong>
+                        <input type="text" name="chip_number" class="form-control" value="{{ $res->chip_number }}">
+                        @error('chip_number')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Client email:</strong>
-                        <input type="text" name="email" class="form-control" value="{{ $res->email }}">
-                        @error('email')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Client city_id:</strong>
-                        <input type="text" name="city_id" class="form-control" value="{{ $res->city_id }}">
-                        @error('city_id')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Client street_id:</strong>
-                        <input type="text" name="street_id" class="form-control" value="{{ $res->street_id }}">
-                        @error('street_id')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Client apartment:</strong>
-                        <input type="text" name="apartment" class="form-control" value="{{ $res->apartment }}">
-                        @error('apartment')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Client zip:</strong>
-                        <input type="text" name="zip" class="form-control" value="{{ $res->zip }}">
-                        @error('zip')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Client discount:</strong>
-                        <input type="text" name="discount" class="form-control" value="{{ $res->discount }}">
-                        @error('discount')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Client number_of_journal:</strong>
-                        <input type="text" name="number_of_journal" class="form-control" value="{{ $res->number_of_journal }}">
-                        @error('number_of_journal')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Client type_id:</strong>
-                        <input type="text" name="type_id" class="form-control" value="{{ $res->type_id }}">
-                        @error('type_id')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Client how_find:</strong>
-                        <input type="text" name="how_find" class="form-control" value="{{ $res->how_find }}">
-                        @error('how_find')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Client unsubscribe:</strong>
-                        <input type="text" name="unsubscribe" class="form-control" value="{{ $res->unsubscribe }}">
-                        @error('unsubscribe')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Client in_blacklist:</strong>
-                        <input type="text" name="in_blacklist" class="form-control" value="{{ $res->in_blacklist }}">
-                        @error('in_blacklist')
+                        <strong>Pet lab_number:</strong>
+                        <input type="text" name="lab_number" class="form-control" value="{{ $res->lab_number }}">
+                        @error('lab_number')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>

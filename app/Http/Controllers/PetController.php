@@ -73,26 +73,22 @@ class PetController extends Controller
             'Content-Type' => 'application/json'
         ];
         $body = '{
-            "owner_id":6,
-            "alias":"Матроскин",
-            "type_id": 13,
-            "breed_id":444
+            "alias": "'.$request->alias.'",
+            "sex": "'.$request->sex.'",
+            "type_id": "'.$request->type_id.'",
+            "breed_id": "'.$request->breed_id.'",
+            "color_id": "'.$request->color_id.'",
+            "weight": "'.$request->weight.'",
+            "birthday": "'.$request->birthday.'",
+            "chip_number": "'.$request->chip_number.'",
+            "lab_number": "'.$request->lab_number.'",
+            "owner_id": '.$id_client.',
         }';
-        // "alias": "'.$request->alias.'",
-        // "sex": "'.$request->sex.'",
-        // "breed_id": "'.$request->breed_id.'",
-        // "color_id": "'.$request->color_id.'",
-        // "weight": "'.$request->weight.'",
-        // "birthday": "'.$request->birthday.'",
-        // "chip_number": "'.$request->chip_number.'",
-        // "lab_number": "'.$request->lab_number.'",
-        // "owner_id": '.$id_client.',
         // echo $body;
         $request = new Request('POST', $url.'/rest/api/pet', $headers, $body);
         $res = $client->sendAsync($request)->wait();
-        echo $res->getBody();
-
-        // // return redirect()->route('clients-all', $id)->with('success','Pet has been created successfully.');
+        // echo $res->getBody();
+        return redirect()->route('clients-all', $id)->with('success','Pet has been created successfully.');
     }
     public function destroy($id, $id_client, $id_pet)
     {
@@ -108,7 +104,7 @@ class PetController extends Controller
         $client->sendAsync($request)->wait();
         return redirect()->route('clients-all', $id)->with('success','Pet has been deleted successfully.');
     }
-    public function edit($id, $id_client)
+    public function edit($id, $id_client, $id_pet)
     {
         $com = Company::find($id);
         $key = $com->key;
@@ -117,14 +113,18 @@ class PetController extends Controller
         $headers = [
             'X-REST-API-KEY' => $key
         ];
-        $request = new Request('GET', $url.'/rest/api/client/'.$id_client, $headers);
+        $request = new Request('GET', $url.'/rest/api/pet/'.$id_pet, $headers);
         $res = $client->sendAsync($request)->wait();
         $res = json_decode($res->getBody());
-        $res = $res->data->client;
+        $res = $res->data->pet;
         // var_dump(compact('res'));
-        return view('conn.edit', compact('res'), compact('id'));
+        $ids = [
+            'id' => $id,
+            'id_client' => $id_client
+        ];
+        return view('pet.edit', compact('res'), compact('ids'));
     }
-    public function update(HttpRequest $request, $id, $id_client)
+    public function update(HttpRequest $request, $id, $id_client, $id_pet)
     {
         $com = Company::find($id);
         $key = $com->key;
@@ -134,29 +134,21 @@ class PetController extends Controller
             'X-REST-API-KEY' => $key
         ];
         $body = '{
-            "last_name": "'.$request->last_name.'",
-            "first_name": "'.$request->first_name.'",
-            "middle_name": "'.$request->middle_name.'",
-            "passport_series": "'.$request->passport_series.'",
-            "home_phone": "'.$request->home_phone.'",
-            "work_phone": "'.$request->work_phone.'",
-            "cell_phone": "'.$request->cell_phone.'",
-            "email": "'.$request->email.'",
-            "city_id": '.$request->city_id.',
-            "street_id": '.$request->street_id.',
-            "apartment": "'.$request->apartment.'",
-            "zip": "'.$request->zip.'",
-            "discount": "'.$request->discount.'",
-            "number_of_journal": "'.$request->number_of_journal.'",
-            "type_id": '.$request->type_id.',
-            "how_find": "'.$request->how_find.'",
-            "unsubscribe": "'.$request->unsubscribe.'",
-            "in_blacklist": "'.$request->in_blacklist.'"
+            "id": "'.$id_pet.'",
+            "alias": "'.$request->alias.'",
+            "sex": "'.$request->sex.'",
+            "type_id": "'.$request->type_id.'",
+            "breed_id": "'.$request->breed_id.'",
+            "color_id": "'.$request->color_id.'",
+            "weight": "'.$request->weight.'",
+            "birthday": "'.$request->birthday.'",
+            "chip_number": "'.$request->chip_number.'",
+            "lab_number": "'.$request->lab_number.'",
+            "owner_id": '.$id_client.',
         }';
-        // echo $body;
-        $request = new Request('PUT', $url.'/rest/api/client/'.$id_client, $headers, $body);
-        $res = $client->sendAsync($request)->wait();
-        // echo $res->getBody();
+        echo $body;
+        $request = new Request('PUT', $url.'/rest/api/pet/'.$id_pet, $headers, $body);
+        $client->sendAsync($request)->wait();
         return redirect()->route('clients-all', $id)->with('success','Pet Has Been updated successfully');
     }
 }

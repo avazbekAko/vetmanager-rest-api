@@ -45,7 +45,7 @@
                         <td>{{ $re->weight }}</td>
 
                         <td>
-                            <a class="btn btn-primary" href="{{ url('/connection/'.$ids['id'].'/client/'.$re->id.'/edit') }}">Edit</a>
+                            <a class="btn btn-primary" href="{{ url('/connection/'.$ids['id'].'/client/'.$ids['id_client'].'/pet/'.$re->id.'/edit') }}">Edit</a>
                             <a href="{{ url('/connection/'.$ids['id'].'/client/'.$ids['id_client'].'/pet/'.$re->id.'/delete') }}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>

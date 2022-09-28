@@ -8,7 +8,7 @@
                     <h2>Add Pet</h2>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('clients-all', $id) }}" enctype="multipart/form-data">
+                    <a class="btn btn-primary" href="{{ route('clients-all', $ids['id']) }}" enctype="multipart/form-data">
                         Back</a>
                 </div>
             </div>
@@ -35,6 +35,15 @@
                         <strong>Pet пол:</strong>
                         <input type="text" name="sex" class="form-control" placeholder="Pet пол">
                         @error('sex')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Pet type_id:</strong>
+                        <input type="text" name="type_id" class="form-control" placeholder="Pet type_id">
+                        @error('type_id')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
