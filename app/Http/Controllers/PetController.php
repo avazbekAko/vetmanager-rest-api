@@ -12,7 +12,6 @@ class PetController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
     }
     public function all($id, $id_client)
     {
@@ -50,8 +49,8 @@ class PetController extends Controller
             return view('pet.index', compact('result'), compact('ids'));
         }
         catch(Exception $e){
-            $er =  'Error: '.$e->getMessage()." --$id-- ";
-            return redirect()->route('companies.index')->with('error', $er);
+            $er =  'Error: '.$e->getMessage();
+            return redirect()->route('companies.edit', $id)->with('error', $er);
         }
     }
     public function create($id, $id_client)

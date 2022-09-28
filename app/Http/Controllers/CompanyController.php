@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -13,7 +14,6 @@ class CompanyController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     /**
@@ -52,15 +52,16 @@ class CompanyController extends Controller
 
         $user_id = auth()->id();
 
-        Company::create([
+        $conn = Company::create([
             "url" => $request->url,
             "key" => $request->key,
             "user_id" => $user_id
             ]
         );
-
-
-        return redirect()->route('companies.index')->with('success','Company has been created successfully.');
+        $user = User::find($user_id);
+        $user->id_conn = $conn->id;
+        $user->save();
+        return redirect()->route('clients-all', $conn->id)->with('success','Your data has been successfully saved.');
     }
 
     /**
@@ -108,8 +109,10 @@ class CompanyController extends Controller
                 'user_id' => $user_id
             ]
         )->save();
-
-        return redirect()->route('companies.index')->with('success','Company Has Been updated successfully');
+        $user = User::find($user_id);
+        $user->id_conn = $company->id;
+        $user->save();
+        return redirect()->route('clients-all', $company->id)->with('success','Your data has been successfully saved.');
     }
 
     /**

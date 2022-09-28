@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'id_conn'
     ];
 
     /**
@@ -41,4 +42,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function id_conn(){
+        return $this->id_conn != 0;
+    }
 }

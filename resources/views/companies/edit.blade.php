@@ -5,14 +5,15 @@
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
-                    <h2>Edit Company</h2>
-                </div>
-                <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('companies.index') }}" enctype="multipart/form-data">
-                        Back</a>
+                    <h2>Edit connected</h2>
                 </div>
             </div>
         </div>
+        @if ($message = Session::get('error'))
+            <div class="alert alert-warning">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
         @if(session('status'))
         <div class="alert alert-success mb-1 mt-1">
             {{ session('status') }}

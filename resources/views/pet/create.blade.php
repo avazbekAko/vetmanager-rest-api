@@ -8,7 +8,8 @@
                     <h2>Add Pet</h2>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('companies.index') }}"> Back</a>
+                    <a class="btn btn-primary" href="{{ route('clients-all', $id) }}" enctype="multipart/form-data">
+                        Back</a>
                 </div>
             </div>
         </div>
